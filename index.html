@@ -10,12 +10,26 @@
       href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100..900&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" crossorigin href="/goit-js-hw-11/assets/index-CrzP3KlA.css">
+    <script type="module" crossorigin src="/goit-js-hw-11/index.js"></script>
+    <link rel="modulepreload" crossorigin href="/goit-js-hw-11/assets/vendor-frHSA4Lh.js">
+    <link rel="stylesheet" crossorigin href="/goit-js-hw-11/assets/vendor-DumFYO8Z.css">
+    <link rel="stylesheet" crossorigin href="/goit-js-hw-11/assets/index-3KjUmUyi.css">
   </head>
   <body>
-    <!-- <ul class="navigation">
-      <li><a href="./1-timer.html">Timer</a></li>
-      <li><a href="./2-snackbar.html">Snackbar</a></li>
-    </ul> -->
+    <form class="form">
+      <label>
+        <input
+          type="text"
+          name="search-text"
+          placeholder="Search images..."
+          required
+        />
+      </label>
+      <button type="submit">Search</button>
+    </form>
+    <div id="gallery">
+      <span class="loader hidden"></span>
+      <ul class="gallery"></ul>
+    </div>
   </body>
 </html>
