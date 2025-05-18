@@ -15,6 +15,6 @@ export function getImagesByQuery(query) {
     .get(`?${searchParams}`)
     .then(response => response.data)
     .catch(error => {
-      throw err;
+      throw error;
     });
 }
