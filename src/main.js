@@ -2,15 +2,29 @@ import iziToast from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
 
 import { getImagesByQuery } from './js/pixabay-api';
-import { createGallery } from './js/render-functions';
-import { clearGallery } from './js/render-functions';
-import { showLoader } from './js/render-functions';
-import { hideLoader } from './js/render-functions';
+import {
+  createGallery,
+  clearGallery,
+  showLoader,
+  hideLoader,
+} from './js/render-functions';
 
 import errorIcon from '/img/err.svg';
 
 const input = document.querySelector('input');
 const form = document.querySelector('.form');
+
+function showWarning(message) {
+  iziToast.warning({
+    message,
+    iconUrl: errorIcon,
+    iconColor: '#fff',
+    messageColor: '#fff',
+    position: 'topRight',
+    messageSize: '16px',
+    backgroundColor: '#EF4040',
+  });
+}
 
 form.addEventListener('submit', event => {
   event.preventDefault();
@@ -18,15 +32,7 @@ form.addEventListener('submit', event => {
   const requestKey = input.value.trim();
 
   if (!requestKey) {
-    iziToast.warning({
-      message: 'Please enter a search query.',
-      iconUrl: errorIcon,
-      iconColor: '#fff',
-      messageColor: '#fff',
-      position: 'topRight',
-      messageSize: '16px',
-      backgroundColor: ' #EF4040',
-    });
+    showWarning('Please enter a search query.');
     return;
   }
   clearGallery();
@@ -34,27 +40,20 @@ form.addEventListener('submit', event => {
   getImagesByQuery(requestKey)
     .then(response => {
       if (response.totalHits === 0) {
-        iziToast.warning({
-          message:
-            'Sorry, there are no images matching your search query. Please try again!',
-          iconUrl: errorIcon,
-          iconColor: '#fff',
-          messageColor: '#fff',
-          position: 'topRight',
-          messageSize: '16px',
-          backgroundColor: ' #EF4040',
-        });
-        hideLoader();
+        showWarning(
+          'Sorry, there are no images matching your search query. Please try again!'
+        );
       } else createGallery(response.hits);
     })
-    .catch(err => {
+    .catch(error => {
       iziToast.error({
         message: 'Error',
         position: 'topRight',
       });
-      console.log(err);
+      console.log(error);
     })
     .finally(() => {
       hideLoader();
+      input.value = '';
     });
 });
